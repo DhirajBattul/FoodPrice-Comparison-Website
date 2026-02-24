@@ -1,0 +1,29 @@
+### Add a New Restaurant
+POST http://localhost:8081/restaurant
+Content-Type: application/json
+
+{
+    "name": "McD",
+    "location": "Solapur"
+}
+
+###
+
+
+
+### Add a New Product
+POST http://localhost:8081/product
+Content-Type: application/json  
+
+{
+    "name": "Maharaja Mac",
+    "description": "Good Burger",
+    "price": 220.00,
+    "category": "Burger",
+    "rating": 4.5,
+    "restaurant": {
+        "id": 2
+    }
+}
+### Search for a Product
+GET http://localhost:8081/product/search?name=Maharaja
