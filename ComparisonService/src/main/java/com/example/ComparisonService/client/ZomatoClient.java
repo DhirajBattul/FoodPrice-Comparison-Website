@@ -9,6 +9,6 @@ import com.example.ComparisonService.DTO.ProductDTO;
 @FeignClient(name = "ZOMATO-SERVICE")
 public interface ZomatoClient {
 	
-	@GetMapping("search") 
+	@GetMapping("/products/search") 
     ProductDTO searchProduct(@RequestParam("name") String name);
 }

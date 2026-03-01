@@ -9,6 +9,6 @@ import com.example.ComparisonService.DTO.ProductDTO;
 @FeignClient(name = "SWIGGY-SERVICE")
 public interface SwiggyClient {
 
-	@GetMapping("search")
+	@GetMapping("/products/search")
     ProductDTO searchProduct(@RequestParam("name") String name);
 }

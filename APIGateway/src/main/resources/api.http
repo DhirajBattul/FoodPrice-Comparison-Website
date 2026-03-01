@@ -1,0 +1,107 @@
+### Variables
+@gateway = http://localhost:8080
+@zomato = http://localhost:8081
+@swiggy = http://localhost:8082
+@comparison = http://localhost:8083
+
+# ==========================================
+# 1. API GATEWAY ENDPOINTS (The "Front Door")
+# ==========================================
+
+### Add Product to Zomato via Gateway
+POST {{gateway}}/zomato/products/product
+Content-Type: application/json
+
+{
+    "name": "Maharaja Mac",
+    "description": "Good Burger",
+    "price": 220.00,
+    "category": "Burger",
+    "rating": 4.5,
+    "restaurant": {
+        "id": 2
+    }
+}
+
+
+
+### Add Restaurant to Zomato via Gateway
+POST {{gateway}}/zomato/restaurants/restaurant
+Content-Type: application/json
+
+{
+  "name": "Juice Galaxy",
+  "location": "Solapur"
+}
+
+### (Debug) Add Restaurant directly to Zomato service
+# Use this to ensure the Zomato service is up and the endpoint exists
+POST {{zomato}}/restaurants/restaurant
+Content-Type: application/json
+
+{
+  "name": "Juice Galaxy",
+  "location": "Solapur"
+}
+
+### Search Zomato Product via Gateway
+GET {{gateway}}/zomato/products/search?name=Hyderabadi Chicken Biryani
+
+### Add Restaurant to Swiggy via Gateway
+POST {{gateway}}/swiggy/restaurants/restaurant
+Content-Type: application/json
+
+{
+  "name": "Swiggy Kitchen",
+  "location": "Bangalore"
+}
+
+### (Debug) Add Restaurant directly to Swiggy service
+POST {{swiggy}}/restaurants/restaurant
+Content-Type: application/json
+
+{
+  "name": "Swiggy Kitchen",
+  "location": "Bangalore"
+}
+
+---
+
+### Add Product to Swiggy via Gateway
+POST {{gateway}}/swiggy/products/product
+Content-Type: application/json
+
+{
+    "name": "Maharaja Mac",
+    "description": "Good Burger",
+    "price": 220.00,
+    "category": "Burger",
+    "rating": 4.5,
+    "restaurant": {
+        "id": 2
+    }
+}
+### Search Swiggy Product via Gateway
+GET {{gateway}}/swiggy/products/search?name=Paneer
+
+---
+
+### Get Price Comparison via Gateway
+# This calls ComparisonService, which internally calls Zomato & Swiggy
+GET {{gateway}}/compare/Paneer
+
+
+# ==========================================
+# 2. DIRECT MICROSERVICE ENDPOINTS (Debugging)
+# ==========================================
+
+### Direct Zomato Search (Skip Gateway)
+# When calling the Zomato service directly you shouldn't include the "/zomato" prefix
+# - the service itself listens on /products and /restaurants only.
+GET {{zomato}}/products/search?name=Hyderabadi Chicken Biryani
+
+### Direct Swiggy Search (Skip Gateway)
+GET {{swiggy}}/products/search?name=Hyderabadi Chicken Biryani
+
+### Direct Comparison Logic
+GET {{comparison}}/compare/Paneer

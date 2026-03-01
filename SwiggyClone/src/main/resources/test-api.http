@@ -26,4 +26,4 @@ Content-Type: application/json
     }
 }
 ### Search for a Product
-GET http://localhost:8082/product/search?name=Maharaja
+GET http://localhost:8082/swiggy/products/search?name=Hyderabadi Chicken Biryani
