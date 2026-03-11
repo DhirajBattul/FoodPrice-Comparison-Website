@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.ComparisonService.DTO.CachedPriceDTO;
 import com.example.ComparisonService.DTO.ComparisonResponse;
 import com.example.ComparisonService.DTO.ProductDTO;
 import com.example.ComparisonService.client.SwiggyClient;
@@ -19,7 +20,8 @@ public class AggregatorService {
 
     @Autowired private ZomatoClient zomatoClient;
     @Autowired private SwiggyClient swiggyClient;
-    @Autowired private ProductMappingRepo productMappingRepository;  // NEW
+    @Autowired private ProductMappingRepo productMappingRepository; 
+    @Autowired private PriceFetchService priceFetchService;// NEW
 
     // ── EXISTING — name-based search ──────────────────────────────────────────
     public List<ComparisonResponse> compare(String query) {
@@ -79,20 +81,36 @@ public class AggregatorService {
     public ComparisonResponse compareById(Integer productMappingId) {
         ComparisonResponse response = new ComparisonResponse();
 
-        // Get the platform-specific IDs from ComparisonService DB
         ProductMapping mapping = productMappingRepository.findById(productMappingId)
-                .orElseThrow(() -> new RuntimeException("Product mapping not found: " + productMappingId));
+                .orElseThrow(() -> new RuntimeException(
+                    "Product mapping not found: " + productMappingId));
 
         try {
-            ProductDTO zData = zomatoClient.getProductPrice(mapping.getZomatoProductId());
-            response.setZomatoResult(zData);
+            // @Cacheable is on PriceFetchService — proxy works correctly
+            // Cache HIT  → returns instantly from Redis, no Feign call
+            // Cache MISS → calls ZomatoClone, saves to Redis, returns result
+            CachedPriceDTO zomato = priceFetchService
+                .fetchZomatoPrice(productMappingId, mapping.getZomatoProductId());
+
+            ProductDTO zomatoDTO = new ProductDTO();
+            zomatoDTO.setPrice(zomato.getPrice());
+            zomatoDTO.setName(mapping.getCommonName());
+            response.setZomatoResult(zomatoDTO);
+
         } catch (Exception e) {
             System.err.println("Zomato price fetch failed: " + e.getMessage());
         }
 
         try {
-            ProductDTO sData = swiggyClient.getProductPrice(mapping.getSwiggyProductId());
-            response.setSwiggyResult(sData);
+            // Same cache logic for Swiggy — independent from Zomato
+            CachedPriceDTO swiggy = priceFetchService
+                .fetchSwiggyPrice(productMappingId, mapping.getSwiggyProductId());
+
+            ProductDTO swiggyDTO = new ProductDTO();
+            swiggyDTO.setPrice(swiggy.getPrice());
+            swiggyDTO.setName(mapping.getCommonName());
+            response.setSwiggyResult(swiggyDTO);
+
         } catch (Exception e) {
             System.err.println("Swiggy price fetch failed: " + e.getMessage());
         }
@@ -100,6 +118,7 @@ public class AggregatorService {
         calculateBestPrice(response);
         return response;
     }
+
 
     // ── EXISTING — shared comparison logic ────────────────────────────────────
     private void calculateBestPrice(ComparisonResponse response) {
