@@ -20,7 +20,7 @@ import com.example.ComparisonService.service.SeedService;
 
 @RestController
 
-@CrossOrigin(origins= "http://localhost:3000")
+
 
 public class ComparisonController {
 	@Autowired
