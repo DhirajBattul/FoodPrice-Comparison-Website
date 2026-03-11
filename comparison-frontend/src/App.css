@@ -1,109 +1,256 @@
 /* General Layout */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
 body {
   font-family: 'Poppins', sans-serif;
-  background-color: #f4f7f6;
-  margin: 0;
-  display: flex;
-  justify-content: center;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   min-height: 100vh;
+  margin: 0;
+  padding: 20px;
 }
 
 .app-container {
   text-align: center;
   width: 100%;
-  max-width: 900px;
-  padding: 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 20px;
+  padding: 30px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
 }
 
 .title {
   color: #333;
   margin-bottom: 30px;
+  font-size: 2.5rem;
 }
 
 /* Search Bar */
 .search-box {
   display: flex;
   justify-content: center;
-  margin-bottom: 40px;
+  margin-bottom: 30px;
 }
 
-input {
-  padding: 15px;
+.search-box input {
+  padding: 15px 20px;
   width: 60%;
   border: 2px solid #ddd;
   border-radius: 30px 0 0 30px;
   font-size: 16px;
   outline: none;
+  transition: border-color 0.3s;
 }
 
-button {
+.search-box input:focus {
+  border-color: #667eea;
+}
+
+.search-box button {
   padding: 15px 30px;
-  background-color: #2ecc71;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   color: white;
   border: none;
   border-radius: 0 30px 30px 0;
   font-size: 16px;
   cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.search-box button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+/* Back Button */
+.back-btn {
+  padding: 10px 20px;
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  font-size: 14px;
+  cursor: pointer;
+  margin-bottom: 20px;
   transition: background 0.3s;
 }
 
-button:hover {
-  background-color: #27ae60;
+.back-btn:hover {
+  background-color: #5a6268;
 }
 
-/* Winner Banner */
-.winner-banner {
-  background-color: #dff0d8;
-  color: #3c763d;
+/* Loading & Error */
+.loading {
+  color: #667eea;
+  font-size: 1.1rem;
+  margin: 20px 0;
+}
+
+.error {
+  color: #dc3545;
+  background-color: #f8d7da;
   padding: 15px;
   border-radius: 8px;
-  margin-bottom: 20px;
-  font-weight: bold;
-  font-size: 1.2rem;
-  border: 1px solid #d6e9c6;
+  margin: 20px 0;
+  border: 1px solid #f5c6cb;
 }
 
-/* Comparison Layout */
+/* Section Headers */
+h2 {
+  color: #333;
+  margin-bottom: 25px;
+  font-size: 1.5rem;
+}
+
+/* Cards Grid */
 .cards-wrapper {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: stretch;
   gap: 20px;
   flex-wrap: wrap;
+  margin: 20px 0;
 }
 
+/* Restaurant Card */
+.restaurant-card {
+  cursor: pointer;
+  width: 280px;
+}
+
+.restaurant-card:hover {
+  transform: translateY(-5px);
+}
+
+.restaurant-header {
+  background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+}
+
+.location {
+  color: #777;
+  font-size: 0.95rem;
+  margin: 10px 0;
+}
+
+.platforms {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.zomato-badge, .swiggy-badge {
+  padding: 5px 12px;
+  border-radius: 15px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.zomato-badge {
+  background-color: #cb202d;
+  color: white;
+}
+
+.swiggy-badge {
+  background-color: #fc8019;
+  color: white;
+}
+
+/* Product Card */
+.product-card {
+  cursor: pointer;
+  width: 260px;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+}
+
+.product-card .product-img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.product-card .category {
+  color: #777;
+  font-size: 0.9rem;
+  margin: 5px 0;
+}
+
+.compare-btn {
+  width: 100%;
+  padding: 10px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 20px;
+  margin-top: 10px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.compare-btn:hover {
+  transform: scale(1.02);
+}
+
+/* VS Badge */
 .vs-badge {
   background-color: #333;
   color: white;
   padding: 15px;
   border-radius: 50%;
   font-weight: bold;
-  font-size: 1.2rem;
-  z-index: 2;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 40px;
 }
 
-/* Product Card */
+/* Winner Banner */
+.winner-banner {
+  background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+  color: white;
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 15px;
+  font-weight: bold;
+  font-size: 1.3rem;
+  box-shadow: 0 4px 15px rgba(17, 153, 142, 0.3);
+}
+
+.price-message {
+  color: #38ef7d;
+  font-weight: 600;
+  margin-bottom: 20px;
+  font-size: 1.1rem;
+}
+
+/* Main Product Card */
 .card {
   background: white;
   border-radius: 15px;
   width: 300px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  border-top: 5px solid #ccc;
-  transition: transform 0.3s;
+  border: 3px solid transparent;
+  transition: transform 0.3s, box-shadow 0.3s;
 }
 
 .winner-card {
   transform: scale(1.05);
-  box-shadow: 0 8px 25px rgba(46, 204, 113, 0.4);
-  border-color: #2ecc71 !important;
+  box-shadow: 0 8px 30px rgba(46, 204, 113, 0.5);
+  border-color: #38ef7d !important;
 }
 
 .card-header {
   color: white;
-  padding: 10px;
+  padding: 12px;
   font-weight: bold;
   text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .product-img {
@@ -117,22 +264,204 @@ button:hover {
 }
 
 .price-tag {
-  font-size: 2rem;
+  font-size: 2.2rem;
   font-weight: bold;
   color: #333;
-  margin: 10px 0;
+  margin: 15px 0;
 }
 
 .restaurant {
   color: #777;
+  font-size: 0.95rem;
+}
+
+.description {
+  color: #666;
   font-size: 0.9rem;
+  margin: 10px 0;
+}
+
+.rating {
+  color: #f39c12;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.category {
+  color: #999;
+  font-size: 0.85rem;
+  text-transform: uppercase;
 }
 
 .error-card {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 200px;
+  min-height: 200px;
   color: #999;
   border: 2px dashed #ccc;
+  background: #f9f9f9;
 }
+
+/* Search Results */
+.search-results {
+  margin-top: 20px;
+}
+
+.search-results-list {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  align-items: center;
+}
+
+.search-result-card {
+  width: 100%;
+  max-width: 700px;
+  cursor: pointer;
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s;
+}
+
+.search-result-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.search-result-header {
+  background: #f8f9fa;
+  padding: 15px 20px;
+  border-bottom: 1px solid #eee;
+}
+
+.winner-badge {
+  font-weight: bold;
+  font-size: 1rem;
+  padding: 8px 15px;
+  border-radius: 20px;
+}
+
+.winner-badge.zomato {
+  background-color: #cb202d;
+  color: white;
+}
+
+.winner-badge.swiggy {
+  background-color: #fc8019;
+  color: white;
+}
+
+.tie-badge {
+  background-color: #6c757d;
+  color: white;
+  padding: 8px 15px;
+  border-radius: 20px;
+  font-weight: bold;
+}
+
+.message {
+  color: #28a745;
+  margin-top: 8px;
+  font-size: 0.95rem;
+}
+
+/* Mini Cards in Search Results */
+.mini-card {
+  flex: 1;
+  padding: 15px;
+  border-radius: 10px;
+  min-width: 200px;
+}
+
+.mini-card.zomato {
+  background: linear-gradient(135deg, #fff5f5 0%, #fed7d7 100%);
+  border: 2px solid #cb202d;
+}
+
+.mini-card.swiggy {
+  background: linear-gradient(135deg, #fffaf0 0%, #feebc8 100%);
+  border: 2px solid #fc8019;
+}
+
+.mini-card-header {
+  font-weight: bold;
+  font-size: 1rem;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+}
+
+.zomato .mini-card-header {
+  color: #cb202d;
+}
+
+.swiggy .mini-card-header {
+  color: #fc8019;
+}
+
+.mini-card .product-name {
+  font-weight: 600;
+  color: #333;
+  margin: 5px 0;
+}
+
+.mini-card .restaurant-name {
+  color: #777;
+  font-size: 0.85rem;
+  margin: 5px 0;
+}
+
+.mini-card .price {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #333;
+  margin-top: 10px;
+}
+
+.no-results {
+  color: #777;
+  font-size: 1.1rem;
+  margin: 40px 0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .app-container {
+    padding: 15px;
+    border-radius: 15px;
+  }
+
+  .title {
+    font-size: 1.8rem;
+  }
+
+  .search-box input {
+    width: 55%;
+    padding: 12px;
+  }
+
+  .search-box button {
+    padding: 12px 20px;
+  }
+
+  .cards-wrapper {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .vs-badge {
+    padding: 10px;
+  }
+
+  .card {
+    width: 100%;
+    max-width: 320px;
+  }
+
+  .mini-card {
+    width: 100%;
+  }
+}
+
