@@ -13,13 +13,13 @@ POST {{gateway}}/zomato/products/product
 Content-Type: application/json
 
 {
-    "name": "Maharaja Mac",
-    "description": "Good Burger",
-    "price": 220.00,
-    "category": "Burger",
-    "rating": 4.5,
+    "name": "Pav bhaji",
+    "description": "Good Pav bhaji",
+    "price": 130.00,
+    "category": "Street Food",
+    "rating": 3.5,
     "restaurant": {
-        "id": 2
+        "id": 3
     }
 }
 
@@ -30,7 +30,7 @@ POST {{gateway}}/zomato/restaurants/restaurant
 Content-Type: application/json
 
 {
-  "name": "Juice Galaxy",
+  "name": "Supraja",
   "location": "Solapur"
 }
 
@@ -52,8 +52,8 @@ POST {{gateway}}/swiggy/restaurants/restaurant
 Content-Type: application/json
 
 {
-  "name": "Swiggy Kitchen",
-  "location": "Bangalore"
+  "name": "Supraja",
+  "location": "Solapur"
 }
 
 ### (Debug) Add Restaurant directly to Swiggy service
@@ -72,23 +72,23 @@ POST {{gateway}}/swiggy/products/product
 Content-Type: application/json
 
 {
-    "name": "Maharaja Mac",
-    "description": "Good Burger",
-    "price": 220.00,
-    "category": "Burger",
+    "name": "Pav bhaji",
+    "description": "Delicious Pav bhaji",
+    "price": 120.00,
+    "category": "Street Food",
     "rating": 4.5,
     "restaurant": {
         "id": 2
     }
 }
 ### Search Swiggy Product via Gateway
-GET {{gateway}}/swiggy/products/search?name=Paneer
+GET {{gateway}}/swiggy/products/search?name=Pav bhaji
 
 ---
 
 ### Get Price Comparison via Gateway
 # This calls ComparisonService, which internally calls Zomato & Swiggy
-GET {{gateway}}/compare/Paneer
+GET {{gateway}}/compare/Pav bhaji
 
 
 # ==========================================
@@ -104,4 +104,4 @@ GET {{zomato}}/products/search?name=Hyderabadi Chicken Biryani
 GET {{swiggy}}/products/search?name=Hyderabadi Chicken Biryani
 
 ### Direct Comparison Logic
-GET {{comparison}}/compare/Paneer
+GET {{comparison}}/compare/Pav bhaji

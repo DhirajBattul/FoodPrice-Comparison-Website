@@ -1,10 +1,15 @@
 package com.example.ZomatoClone.Service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.ZomatoClone.Model.Product;
 import com.example.ZomatoClone.Model.Restaurant;
 import com.example.ZomatoClone.Repo.RestaurantRepo;
+
+
 
 @Service
 public class RestaurantService {
@@ -17,5 +22,21 @@ public class RestaurantService {
         
         return repo.save(restaurant);
     }
+    
+    // NEW
+    public List<Restaurant> getAllRestaurants() {
+        return repo.findAll();
+    }
 
+    // NEW
+    public Restaurant getRestaurantById(Integer id) {
+        return repo.findById(id).orElseThrow(() -> new RuntimeException("Restaurant not found with id: " + id));
+    }
+
+    // NEW — returns the products list of that restaurant
+    public List<Product> getProductsByRestaurant(Integer id) {
+        Restaurant restaurant = getRestaurantById(id);
+        return restaurant.getProducts();
+
+    }
 }
